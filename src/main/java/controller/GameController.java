@@ -2,6 +2,7 @@ package controller;
 
 import service.PlayerService;
 import service.TargetService;
+import util.InputValidationUtil;
 import view.InputView;
 import view.ResultView;
 
@@ -17,6 +18,10 @@ public class GameController {
 
     public void playGame() {
         String strNum = InputView.enterNumber();
+
+        while (!InputValidationUtil.isNumericAndThreeDigit(strNum)) {
+            strNum = enterAgain();
+        }
         playerService.setNumber(strNum);
 
         playerService.resetResult();
@@ -30,13 +35,27 @@ public class GameController {
         gameOver();
     }
 
+    public String enterAgain() {
+        ResultView.pleaseEnterAgain();
+        return InputView.enterNumber();
+    }
+
     public void gameOver() {
         ResultView.gameOver();
-        int i = InputView.chooseRestartGame();
-        if (i == 2) {
+        String strNum = InputView.chooseRestartGame();
+
+        while (!InputValidationUtil.isOneOrTwo(strNum)) {
+            strNum = chooseAgain();
+        }
+        if (Integer.parseInt(strNum) == 2) {
             System.exit(0);
         }
         startGame();
+    }
+
+    public String chooseAgain() {
+        ResultView.pleaseChooseAgain();
+        return InputView.chooseRestartGame();
     }
 
 }

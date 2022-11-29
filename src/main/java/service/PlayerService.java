@@ -12,10 +12,8 @@ public class PlayerService {
     }
 
     public void setNumber(String strNum) {
-        if (strNum.length() == 3) {
-            int[] arrNum = Arrays.stream(strNum.split("")).mapToInt(Integer::parseInt).toArray();
-            player.setNumber(arrNum);
-        }
+        int[] arrNum = Arrays.stream(strNum.split("")).mapToInt(Integer::parseInt).toArray();
+        player.setNumber(arrNum);
     }
 
     public String getResult() {
